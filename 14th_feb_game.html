@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Love Compatibility Game</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: pink;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            background-color: white;
+            border: 2px solid black;
+            margin-top: 10px;
+        }
+        .container {
+            padding: 20px;
+        }
+        input, button {
+            margin: 5px;
+            padding: 8px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>💕 Love Compatibility Test 💕</h2>
+        <input type="text" id="userName" placeholder="Your Name">
+        <input type="date" id="userDOB">
+        <br>
+        <input type="text" id="crushName" placeholder="Crush's Name">
+        <input type="date" id="crushDOB">
+        <br>
+        <button onclick="startGame()">Start Game</button>
+        <p id="result"></p>
+        <canvas id="canvas" width="600" height="400"></canvas>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        let ball = { x: 100, y: 200, radius: 20, dx: 0, dy: 0, moving: false };
+        let nameLetters = [];
+        let gameStarted = false;
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = "red";
+            ctx.fill();
+        }
+
+        function drawName() {
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "black";
+            nameLetters.forEach(letter => {
+                ctx.fillText(letter.char, letter.x, letter.y);
+            });
+        }
+
+        function updateBall() {
+            if (ball.moving) {
+                ball.x += ball.dx;
+                ball.y += ball.dy;
+                if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) ball.dx *= -1;
+                if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) ball.dy *= -1;
+                nameLetters.forEach(letter => {
+                    if (ball.x > letter.x - 10 && ball.x < letter.x + 20 &&
+                        ball.y > letter.y - 20 && ball.y < letter.y + 10) {
+                        letter.bumped = true;
+                    }
+                });
+                requestAnimationFrame(updateBall);
+            }
+        }
+
+        canvas.addEventListener("click", function (e) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+            if (clickX > ball.x - ball.radius && clickX < ball.x + ball.radius &&
+                clickY > ball.y - ball.radius && clickY < ball.y + ball.radius) {
+                ball.dx = 5;
+                ball.dy = 4;
+                ball.moving = true;
+                updateBall();
+            }
+        });
+
+        function startGame() {
+            const userName = document.getElementById("userName").value.toUpperCase();
+            const userDOB = document.getElementById("userDOB").value;
+            const crushName = document.getElementById("crushName").value.toUpperCase();
+            const crushDOB = document.getElementById("crushDOB").value;
+
+            if (!userName || !userDOB || !crushName || !crushDOB) {
+                document.getElementById("result").innerText = "Please fill in all details!";
+                return;
+            }
+
+            gameStarted = true;
+            nameLetters = [];
+            document.getElementById("result").innerText = "";
+
+            let combinedName = userName + " " + crushName;
+            for (let i = 0; i < combinedName.length; i++) {
+                nameLetters.push({ char: combinedName[i], x: 100 + i * 50, y: 300, bumped: false });
+            }
+
+            ball.x = 100;
+            ball.y = 200;
+            ball.moving = false;
+            drawGame();
+        }
+
+        function calculateLove() {
+            const nameBumped = nameLetters.filter(letter => letter.bumped).length;
+            const percentage = Math.floor(Math.random() * (nameBumped * 10) + 20);
+            if (percentage > 70) {
+                document.getElementById("result").innerText = `💘 Love Score: ${percentage}% - Perfect Match! ❤️`;
+            } else if (percentage > 50) {
+                document.getElementById("result").innerText = `💖 Love Score: ${percentage}% - Good Potential! 💑`;
+            } else {
+                document.getElementById("result").innerText = `💔 Love Score: ${percentage}% - Needs more effort! 😢`;
+            }
+        }
+
+        function drawGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            drawName();
+            if (gameStarted) requestAnimationFrame(drawGame);
+        }
+
+        setInterval(() => {
+            if (ball.moving && nameLetters.some(letter => letter.bumped)) {
+                ball.moving = false;
+                calculateLove();
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

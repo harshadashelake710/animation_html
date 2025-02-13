@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving Circle</title>
+</head>
+<style>
+    /* here we have the *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    because we don't want any padding and margin in the code 
+    so that's why padding and margin is 0 and we want 
+    border box 
+    } */
+     *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+     }
+    /* here we have background color for the body */
+    body {
+        background-color: lightblue;
+        color:white;  /* for text color */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;  /* full height of the viewport */
+    }
+    /* first style canvas so that it will be visible */
+    canvas{
+        border-radius: 5px;
+        background-color: #ffffff;
+    }
+</style>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+</body>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+//circle object
+const circle = {
+    x: 100,   // Start position
+    y: 100,  
+    radius: 40,  
+    dx: 5,    // Speed on x-axis
+    dy: 4     // Speed on y-axis
+};
+
+// Draw circle function
+function drawCircle() {
+    ctx.beginPath();
+    ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+    ctx.fillStyle = "red";
+    ctx.fill();
+}
+
+// Update function to move the circle
+function update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+
+    drawCircle();
+
+    // Move circle
+    circle.x += circle.dx;
+    circle.y += circle.dy;
+
+    // Bounce logic (corrected)
+    if (circle.x + circle.radius > canvas.width || circle.x - circle.radius < 0) {
+        circle.dx *= -1;
+    }
+    if (circle.y + circle.radius > canvas.height || circle.y - circle.radius < 0) {
+        circle.dy *= -1;
+    }
+
+    requestAnimationFrame(update);
+}
+
+update(); // Start animation loop
+</script>
+</html>

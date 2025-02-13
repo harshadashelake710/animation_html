@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Eating Food</title>
+</head>
+<style>
+    /* Reset default styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    /* Background color for body */
+    body {
+        background-color: lightblue;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+    }
+    /* Style for canvas */
+    canvas {
+        border-radius: 5px;
+        background-color: #ffffff;
+        margin: 10px;
+    }
+</style>
+<body>
+    <!-- Canvas for Smiley Emoji -->
+    <canvas id="smileyCanvas" width="400" height="400"></canvas>
+
+    <!-- Canvas for Sad Emoji -->
+    <canvas id="sadCanvas" width="400" height="400"></canvas>
+</body>
+<script>
+// Function to draw a smiling emoji eating veg food
+function drawSmileyFace() {
+    const canvas = document.getElementById('smileyCanvas');
+    const ctx = canvas.getContext('2d');
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
+
+    // Face
+    ctx.beginPath();
+    ctx.arc(200, 200, 100, 0, Math.PI * 2);
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+
+    // Eyes
+    ctx.beginPath();
+    ctx.arc(170, 170, 10, 0, Math.PI * 2);
+    ctx.fillStyle = "black";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(230, 170, 10, 0, Math.PI * 2);
+    ctx.fillStyle = "black";
+    ctx.fill();
+
+    // Smile
+    ctx.beginPath();
+    ctx.arc(200, 220, 40, 0, Math.PI);
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+
+    // Hands holding veg food 🥦
+    ctx.beginPath();
+    ctx.moveTo(130, 250);
+    ctx.lineTo(100, 300);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 5;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(270, 250);
+    ctx.lineTo(300, 300);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 5;
+    ctx.stroke();
+
+    // Veg food
+    ctx.font = "30px Arial";
+    ctx.fillText("🥦", 90, 320);
+    ctx.fillText("🥕", 290, 320);
+}
+
+// Function to draw a sad emoji eating non-veg food
+function drawSadFace() {
+    const canvas = document.getElementById('sadCanvas');
+    const ctx = canvas.getContext('2d');
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear previous drawings
+
+    // Face
+    ctx.beginPath();
+    ctx.arc(200, 200, 100, 0, Math.PI * 2);
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+
+    // Eyes
+    ctx.beginPath();
+    ctx.arc(170, 170, 10, 0, Math.PI * 2);
+    ctx.fillStyle = "black";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(230, 170, 10, 0, Math.PI * 2);
+    ctx.fillStyle = "black";
+    ctx.fill();
+
+    // Sad Mouth
+    ctx.beginPath();
+    ctx.arc(200, 230, 40, Math.PI, 2 * Math.PI);
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+
+    // Hands holding non-veg food 🍗
+    ctx.beginPath();
+    ctx.moveTo(130, 250);
+    ctx.lineTo(100, 300);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 5;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(270, 250);
+    ctx.lineTo(300, 300);
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 5;
+    ctx.stroke();
+
+    // Non-veg food
+    ctx.font = "30px Arial";
+    ctx.fillText("🍗", 90, 320);
+    ctx.fillText("🍖", 290, 320);
+}
+
+// Draw both emojis
+drawSmileyFace();
+drawSadFace();
+</script>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smiley Face</title>
+</head>
+<style>
+    /* here we have the *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    because we don't want any padding and margin in the code 
+    so that's why padding and margin is 0 and we want 
+    border box 
+    } */
+     *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+     }
+    /* here we have background color for the body */
+    body {
+        background-color: lightblue;
+        color:white;  /* for text color */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;  /* full height of the viewport */
+    }
+    /* first style canvas so that it will be visible */
+    canvas{
+        border-radius: 5px;
+        background-color: #ffffff;
+        width: 80%;
+        height: 80%;
+    }
+</style>
+<body>
+    <canvas id="canvas" width="500" height="800"></canvas>
+</body>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth - 100;
+
+// for smiley face we will create a circle
+ctx.beginPath();
+ctx.arc(300, 300, 200, 0, Math.PI * 2);  // Fixed 'math.pi' to 'Math.PI'
+ctx.fillStyle = "yellow";
+ctx.fill();
+ctx.strokeStyle = "black";
+ctx.stroke();
+
+// eyes
+ctx.beginPath();
+ctx.arc(250, 250, 30, 0, Math.PI * 2); // Left eye
+ctx.fillStyle = "black";
+ctx.fill();
+
+ctx.beginPath();
+ctx.arc(350, 250, 30, 0, Math.PI * 2); // Right eye
+ctx.fillStyle = "black";
+ctx.fill();
+
+// mouth
+ctx.beginPath();
+ctx.arc(300, 350, 80, 0, Math.PI); // Smile curve
+ctx.strokeStyle = "black";
+ctx.lineWidth = 5;
+ctx.stroke();
+
+// teeth
+ctx.beginPath();
+ctx.rect(250, 350, 100, 30); // Rectangle for teeth
+ctx.fillStyle = "white";
+ctx.fill();
+ctx.stroke();
+
+// writing text inside teeth
+ctx.font = "20px Arial";  // Font size and style
+ctx.fillStyle = "black";   // Text color
+ctx.textAlign = "center";  // Align text to center
+ctx.fillText("Smile!", 300, 370); // Position text inside teeth
+
+// tongue
+ctx.beginPath();
+ctx.arc(300, 380, 30, 0, Math.PI); // Tongue
+ctx.fillStyle = "red";
+ctx.fill();
+ctx.stroke();
+</script>
+</html>
